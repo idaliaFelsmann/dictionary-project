@@ -1,5 +1,6 @@
 import logo from "./logo.png";
 import './App.css';
+import Dictionary from "./Dictionary";
 
 export default function App() {
   return (
@@ -10,6 +11,12 @@ export default function App() {
       <img src={logo} alt="logo" className="img-fluid"></img>
       </div>
       </header>
+      <main>
+        <Dictionary />
+      </main>
+      <footer>
+        Coded by Idalia F. 
+      </footer>
     </div>
   );
 }
