@@ -29,7 +29,7 @@ export default function App() {
           </a>{" "}
           and hosted {" "}
           <a
-            href="https://shecodes-dictionary.netlify.app/"
+            href="https://reliable-scone-5f11f3.netlify.app/"
             target="_blank"
             rel="noopener noreferrer"
           >

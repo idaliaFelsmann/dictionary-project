@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+.App footer {
+  font-size: 13px;
+  margin: 10px;
+  color: #474b52;
+}
