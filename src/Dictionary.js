@@ -1,34 +1,73 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import Result from "./Result";
+import Photos from "./Photos";
 import "./DictionaryS.css";
 
-export default function Dictionary() { 
+export default function Dictionary(props) {
+  const [keyword, setKeyword] = useState(props.defaultKeyword);
+  const [loaded, setLoaded] = useState(false);
+  const [definition, setDefinition] = useState(null);
+  const [photos, setPhotos] = useState([]);
 
-  let [keyword, setKeyword] = useState("");
+  function handleImages(response) {
+    setPhotos(response.data.photos);
+  }
 
- function handleResponse(response) {
-  console.log(response.data[0]);
- }
+  function handleResponse(response) {
+    setDefinition(response.data[0]);
+    let apiUrl = `https://api.pexels.com/v1/search?query=${response.data[0].word}&per_page=9`;
+    let apiKey = "563492ad6f91700001000001fcd94c1777b243de94bf7f60bc16a402";
+    axios
+      .get(apiUrl, { headers: { Authorization: `Bearer ${apiKey}` } })
+      .then(handleImages);
+  }
 
-  function search(event) {
-    event.preventDefault();
-    alert (`Searching for ${keyword} definition`);
+  function load() {
+    setLoaded(true);
+    search();
+  }
 
-    let apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en/${keyword}`;
+  function search() {
+    let apiUrl = `https://api.dictionaryapi.dev/api/v2/entries/en_US/${keyword}`;
     axios.get(apiUrl).then(handleResponse);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    search();
   }
 
   function handleKeywordChange(event) {
     setKeyword(event.target.value);
-
   }
 
+  if (loaded) {
+    return (
+      <div className="Dictionary">
+        <section>
+          <form onSubmit={handleSubmit}>
+            <label> Picdictionary </label>
+            <input
+              type="search"
+              placeholder="Type here..."
+              defaultValue={props.defaultKeyword}
+              autoFocus={true}
+              className="form-control search-input"
+              onChange={handleKeywordChange}
+            />
+          </form>
+          <small className="hint">i.e. life, love, yoga, meditation</small>
+        </section>
+        <Photos photos={photos} />
+        <Result definition={definition} />
+        
+      </div>
+  );
+      
+  } else {
+    load();
+    return "Loading!"
+  }
 
-    return <div className="DictionaryContent">
-        <form onSubmit={search}>
-            <input type="search" onChange={handleKeywordChange} />        
-        </form>
-        </div>;
 }
-

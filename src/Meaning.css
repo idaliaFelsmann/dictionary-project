@@ -1,0 +1,18 @@
+.Meaning h1 {
+    
+    margin-bottom: 20px;
+    color: rgb(27, 51, 139);
+  }
+
+.Meaning p {
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    margin: 20px 0 10px;
+  }
+
+  .Meaning em {
+    font-size: 13px;
+    line-height: 15px;
+    color: #5c6c9d;
+  }
